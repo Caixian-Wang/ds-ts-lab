@@ -1,4 +1,4 @@
-import { Friend, Colleague } from './myTypes';
+import { Friend, Colleague, EmailContact } from './myTypes';
 import { friends, colleagues } from './01-basics';
 
 function older(f: Friend): string {
@@ -19,3 +19,15 @@ function highestExtension(cs: Colleague[]): Colleague | null {
 
 const highestColleague = highestExtension(colleagues.current);
 console.log(highestColleague ? highestColleague : "No colleagues available");
+
+function sortColleagues(
+    colleagues: Colleague[],
+    sorter: (c1: Colleague, c2: Colleague) => number
+  ): EmailContact[] {
+    const sorted = colleagues.sort(sorter); // Colleague[] inferred
+    const result: EmailContact[] = sorted.map((ce) => ({ name: ce.name, email: ce.contact.email }));
+    return result 
+  }
+  
+  console.log(sortColleagues(colleagues.current, (a, b) => a.contact.extension - b.contact.extension));
+  console.log(sortColleagues(colleagues.current, (a, b) => a.name.length - b.name.length));
